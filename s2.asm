@@ -31,7 +31,7 @@ fixBugs = 0
 allOptimizations = 0
 ;	| If 1, enables all optimizations
 ;
-skipChecksumCheck = 0
+skipChecksumCheck = 1
 ;	| If 1, disables the slow bootup checksum calculation
 ;
 zeroOffsetOptimization = 0|allOptimizations
@@ -49,6 +49,9 @@ relativeLea = 0|(gameRevision<>2)|allOptimizations
 useFullWaterTables = 0
 ;	| If 1, zone offset tables for water levels cover all level slots instead of only slots 8-$F
 ;	| Set to 1 if you've shifted level IDs around or you want water in levels with a level slot below 8
+
+
+;stagecounter = 0
 
 ; >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 ; AS-specific macros and assembler settings
@@ -4148,6 +4151,36 @@ PlaneMapToVRAM_H80_Sega:
 
 
 ; ===========================================================================
+MainSpecialStage_After6:
+	jmp TitleScreen
+	move.b	#GameModeID_SegaScreen,(Game_Mode).w
+	move.b	#3,(Life_count).w
+	move.b	#3,(Life_count_2P).w
+
+	moveq	#0,d0
+	move.w	d0,(Ring_count).w
+	move.l	d0,(Timer).w
+	move.l	d0,(Score).w
+	move.w	d0,(Ring_count_2P).w
+	move.l	d0,(Timer_2P).w
+	move.l	d0,(Score_2P).w
+	move.b	d0,(Continue_count).w
+
+	move.l	#5000,(Next_Extra_life_score).w
+	move.l	#5000,(Next_Extra_life_score_2P).w
+	rts
+MainSpecialStage_Loop:
+	move.b	#GameModeID_SpecialStage,(Game_Mode).w ; => Level (Zone play mode). jk its now SpecialStage
+	move.l	#5000,(Next_Extra_life_score).w
+	move.l	#5000,(Next_Extra_life_score_2P).w
+; 	moveq	#0,(stagecounter).w
+; 	loop	repeat
+
+	lea SpecialStage,	a6
+	jsr (a6)
+	lea MainSpecialStage_Loop, a6
+	jsr	(a6)
+	rts
 ; loc_3998:
 TitleScreen:
 	; Stop music.
@@ -4445,6 +4478,8 @@ TitleScreen_Loop:
 	moveq	#0,d0
 	move.w	d0,(Two_player_mode_copy).w
 	move.w	d0,(Two_player_mode).w
+	move.w	#0,(stagecounter)
+
     if emerald_hill_zone_act_1=0
 	move.w	d0,(Current_ZoneAndAct).w ; emerald_hill_zone_act_1
     else
@@ -4459,9 +4494,11 @@ TitleScreen_Loop:
 ; ---------------------------------------------------------------------------
 +
 	move.w	d0,(Current_Special_StageAndAct).w
-	move.w	d0,(Got_Emerald).w
-	move.l	d0,(Got_Emeralds_array).w
-	move.l	d0,(Got_Emeralds_array+4).w
+; 	move.w	d0,(Got_Emerald).w
+; 	move.l	d0,(Got_Emeralds_array).w
+; 	move.l	d0,(Got_Emeralds_array+4).w
+	lea MainSpecialStage_Loop, a6 ;NOTE: This is the loop thing
+	jsr	(a6)
 	rts
 ; ===========================================================================
 ; loc_3CF6:
@@ -4553,10 +4590,13 @@ TailsNameCheat:
 	; Switch the detected console's region between Japanese and
 	; international. This affects the presence of trademark symbols, and
 	; causes Tails' name to swap between 'Tails' and 'Miles'.
-	bchg	#7,(Graphics_Flags).w
-
-	move.b	#SndID_Ring,d0 ; play the ring sound for a successfully entered cheat
+ 	move.b	#SndID_Ring,d0
 	bsr.w	PlaySound
+ 	bchg	#7,(Graphics_Flags).w
+
+	move.b	#6,(Current_Special_Stage).w
+	jmp MainSpecialStage_Loop
+; 	jmp EmeraldGiveMenuScreen
 +
 	move.w	#0,(Correct_cheat_entries).w
 +
@@ -4591,7 +4631,7 @@ ArtNem_Player1VS2:	BINCLUDE	"art/nemesis/1Player2VS.nem"
 
 ; word_3E82:
 CopyrightText:
-  irpc chr,"@ 1992 SEGA"
+  irpc chr,"TAILS1154"
     if "chr"<>" "
 	dc.w  make_art_tile(ArtTile_ArtNem_FontStuff_TtlScr + 'chr'|0,0,0)
     else
@@ -4836,7 +4876,10 @@ Level_TtlCard:
 +
 	moveq	#PalID_BGND,d0
 	bsr.w	PalLoad_ForFade	; load Sonic's palette line
-	bsr.w	LevelSizeLoad
+	lea		LevelSizeLoad, a0
+	jsr		(a0)
+; 	bsr.w	LevelSizeLoad   ; DANGER: I AM PUTTING TOO MUCH IN THE ROM
+; 	bsr.w	GoTo_LevelSizeLoad ; DANGER: uh oh
 	jsrto	JmpTo_DeformBgLayer
 	clr.w	(Vscroll_Factor_FG).w
 	move.w	#-224,(Vscroll_Factor_P2_FG).w
@@ -6453,7 +6496,11 @@ LoadZoneTiles:
 SpecialStage:
 	cmpi.b	#7,(Current_Special_Stage).w
 	blo.s	+
-	move.b	#0,(Current_Special_Stage).w
+	lea GameMode_EndingSequence, a6
+	jsr	(a6)
+; 	move.b	#0,(Current_Special_Stage).w
+
+; 	lea		EndingSequence
 +
 	move.w	#SndID_SpecStageEntry,d0 ; play that funky special stage entry sound
 	bsr.w	PlaySound
@@ -10107,13 +10154,13 @@ SSStartNewAct:
 ; ----------------------------------------------------------------------------
 ; Misc_7756:
 SpecialStage_RingReq_Team:
-	dc.b  40, 80,140,120	; 4
+	dc.b  20, 170,180,190	; 4
 	dc.b  50,100,140,150	; 8
 	dc.b  60,110,160,170	; 12
-	dc.b  40,100,150,160	; 16
-	dc.b  55,110,200,200	; 20
-	dc.b  80,140,220,220	; 24
-	dc.b 100,190,210,210	; 28
+	dc.b  10,10,10,10	; 16
+	dc.b  55,110,110,110	; 20
+	dc.b  50,100,150,155	; 24
+	dc.b 10,20,30,40	; 28
 	even
 ; ----------------------------------------------------------------------------
 ; Ring requirement values for Sonic or Tails alone games
@@ -10124,13 +10171,13 @@ SpecialStage_RingReq_Team:
 ; ----------------------------------------------------------------------------
 ; Misc_7772:
 SpecialStage_RingReq_Alone:
-	dc.b  30, 70,130,110	; 4
+	dc.b  20, 170,180,190	; 4
 	dc.b  50,100,140,140	; 8
 	dc.b  50,110,160,160	; 12
-	dc.b  40,110,150,150	; 16
-	dc.b  50, 90,160,160	; 20
-	dc.b  80,140,210,210	; 24
-	dc.b 100,150,190,190	; 28
+	dc.b  10,10,10,10	; 16
+	dc.b  50, 90,90,90	; 20
+	dc.b  50,100,150,155	; 24
+	dc.b 10,20,30,40	; 28
 	even
 
 ; special stage palette table
@@ -11635,6 +11682,278 @@ Map_2PSpecialStageZoneResults:	BINCLUDE "mappings/misc/2P Special Stage Zone Res
 
 
 ; ===========================================================================
+EmeraldSelControls:
+	move.b	(Ctrl_1_Press).w,d1
+	andi.b	#button_up_mask|button_down_mask,d1
+	bne.s	+	; up/down pressed
+	subq.w	#1,(LevSel_HoldTimer).w
+	bpl.s	EmeraldSelControls_CheckLR
+
++
+	move.w	#$B,(LevSel_HoldTimer).w
+	move.b	(Ctrl_1_Held).w,d1
+	andi.b	#button_up_mask|button_down_mask,d1
+	beq.s	EmeraldSelControls_CheckLR	; up/down not pressed, check for left & right
+	move.w	(Level_select_zone).w,d0
+	btst	#button_up,d1
+	beq.s	+
+	subq.w	#1,d0	; decrease by 1
+	bcc.s	+	; >= 0?
+	moveq	#$15,d0	; set to $15
+
++
+	btst	#button_down,d1
+	beq.s	+
+	addq.w	#1,d0	; yes, add 1
+	cmpi.w	#$16,d0
+	blo.s	+	; smaller than $16?
+	moveq	#0,d0	; if not, set to 0
+
++
+	move.w	d0,(Level_select_zone).w
+	rts
+; ===========================================================================
+; loc_9522:
+EmeraldSelControls_CheckLR:
+	cmpi.w	#$15,(Level_select_zone).w	; are we in the sound test?
+	bne.s	EmeraldSelControls_SwitchSide	; no
+	move.w	(Sound_test_sound).w,d0
+	move.b	(Ctrl_1_Press).w,d1
+	btst	#button_left,d1
+	beq.s	+
+	subq.b	#1,d0
+	bcc.s	+
+	moveq	#$7F,d0
+
++
+	btst	#button_right,d1
+	beq.s	+
+	addq.b	#1,d0
+	cmpi.w	#$80,d0
+	blo.s	+
+	moveq	#0,d0
+
++
+	btst	#button_A,d1
+	beq.s	+
+	addi.b	#$10,d0
+	andi.b	#$7F,d0
+
++
+	move.w	d0,(Sound_test_sound).w
+	andi.w	#button_B_mask|button_C_mask,d1
+	beq.s	+	; rts
+	move.w	(Sound_test_sound).w,d0
+	addi.w	#$80,d0
+; 	move.w	d0,(Got_Emerald).w		; Give 7 emeralds to the player
+; 	move.w	d0,(Got_Emerald).w
+;  	move.l	d0,(Got_Emeralds_array).w
+;  	move.l	d0,(Got_Emeralds_array+$80).w
+	move.b	#$80,(Current_Special_Stage).w
+; 	jmp		MainSpecialStage_Loop
+	move.b	#MusID_Emerald,d0		; Play the emerald jingle
+	jsrto	JmpTo_PlayMusic
+	move.b	#$80,(Current_Special_Stage).w
+	jmp MainSpecialStage_Loop
+; 	jsrto	JmpTo_PlayMusic
+; 	lea	(debug_cheat).l,a0
+; 	lea	(super_sonic_cheat).l,a2
+; 	lea	(Debug_options_flag).w,a1	; Also S1_hidden_credits_flag
+; 	moveq	#1,d2	; flag to tell the routine to enable the Super Sonic cheat
+; 	bsr.w	CheckCheats
+
+
++
+	rts
+; ===========================================================================
+; loc_958A:
+EmeraldSelControls_SwitchSide:	; not in soundtest, not up/down pressed
+	move.b	(Ctrl_1_Press).w,d1
+	andi.b	#button_left_mask|button_right_mask,d1
+	beq.s	+				; no direction key pressed
+	move.w	(Level_select_zone).w,d0	; left or right pressed
+	lea     LevelSelect_SwitchTable(pc), a0    ; Load the base address of the table into A0
+    lsl.w   #1, d0                             ; Multiply the offset in D0 by 2 (for word size)
+    move.b  (a0, d0.w), d0                    ; Fetch the byte from the table using the offset in D0
+; 	move.b	LevelSelect_SwitchTable(pc,d0.w),d0 ; set selected zone according to table
+	move.w	d0,(Level_select_zone).w
++
+	rts
+; ===========================================================================
+EmeraldGiveMenuScreen_LevelSelect:
+	; Load foreground (sans zone icon)
+	lea	(Chunk_Table).l,a1
+	lea	(MapEng_LevSel).l,a0	; 2 bytes per 8x8 tile, compressed
+	move.w	#make_art_tile(ArtTile_VRAM_Start,0,0),d0
+	bsr.w	EniDec
+
+	lea	(Chunk_Table).l,a1
+	move.l	#vdpComm(VRAM_Plane_A_Name_Table,VRAM,WRITE),d0
+	moveq	#40-1,d1
+	moveq	#28-1,d2	; 40x28 = whole screen
+	jsrto	JmpTo_PlaneMapToVRAM_H40	; display patterns
+
+	; Draw sound test number
+	moveq	#palette_line_0,d3
+	bsr.w	LevelSelect_DrawSoundNumber
+
+	; Load zone icon
+	lea	(Chunk_Table+planeLoc(40,0,28)).l,a1
+	lea	(MapEng_LevSelIcon).l,a0
+	move.w	#make_art_tile(ArtTile_ArtNem_LevelSelectPics,0,0),d0
+	bsr.w	EniDec
+
+	bsr.w	LevelSelect_DrawIcon
+
+	clr.w	(Player_mode).w
+	clr.w	(Results_Screen_2P).w	; VsRSID_Act
+	clr.b	(Level_started_flag).w
+	clr.w	(Anim_Counters).w
+
+	; Animate background (loaded back in MenuScreen)
+	lea	(Anim_SonicMilesBG).l,a2
+	jsrto	JmpTo2_Dynamic_Normal	; background
+
+	moveq	#PalID_Menu,d0
+	bsr.w	PalLoad_ForFade
+
+	lea	(Normal_palette_line3).w,a1
+	lea	(Target_palette_line3).w,a2
+
+	moveq	#bytesToLcnt(palette_line_size),d1
+-	move.l	(a1),(a2)+
+	clr.l	(a1)+
+	dbf	d1,-
+
+	move.b	#MusID_MTZ,d0
+	jsrto	JmpTo_PlayMusic
+
+	move.w	#(30*60)-1,(Demo_Time_left).w	; 30 seconds
+	clr.w	(Two_player_mode).w
+	clr.l	(Camera_X_pos).w
+	clr.l	(Camera_Y_pos).w
+	clr.w	(Correct_cheat_entries).w
+	clr.w	(Correct_cheat_entries_2).w
+
+	move.b	#VintID_Menu,(Vint_routine).w
+	bsr.w	WaitForVint
+
+	move.w	(VDP_Reg1_val).w,d0
+	ori.b	#$40,d0
+	move.w	d0,(VDP_control_port).l
+
+	bsr.w	Pal_FadeFromBlack
+
+;loc_93AC:
+EmeraldGiveMenuScreen_Main:	; routine running during level select
+	move.b	#VintID_Menu,(Vint_routine).w
+	bsr.w	WaitForVint
+
+	move	#$2700,sr
+
+	moveq	#palette_line_0,d3
+	bsr.w	LevelSelect_MarkFields	; unmark fields
+	bsr.w	EmeraldSelControls		; possible change selected fields
+	move.w	#palette_line_3,d3
+	bsr.w	LevelSelect_MarkFields	; mark fields
+
+	bsr.w	LevelSelect_DrawIcon
+
+	move	#$2300,sr
+
+	lea	(Anim_SonicMilesBG).l,a2
+	jsrto	JmpTo2_Dynamic_Normal
+
+	move.b	(Ctrl_1_Press).w,d0
+	or.b	(Ctrl_2_Press).w,d0
+	andi.b	#button_start_mask,d0	; start pressed?
+	bne.s	EmeraldGiveMenuScreen_PressStart	; yes
+	bra.w	EmeraldGiveMenuScreen_Main	; no
+; ===========================================================================
+;loc_93F0:
+EmeraldGiveMenuScreen_PressStart:
+	move.w	(Level_select_zone).w,d0
+	add.w	d0,d0
+	movea.l #LevelSelect_Order, a0     ; Load the base address into A0
+	lsl.w   #1, d0                     ; Multiply offset in D0 by 2 (word size)
+	move.w  (a0, d0.w), d0             ; Read the word from the calculated address into D0
+
+; 	move.w	LevelSelect_Order(pc,d0.w),d0
+	move.b	#MusID_FadeOut,d0
+	jsrto	JmpTo_PlayMusic
+; 	move.b	#SndID_SpecStageEntry,d0
+; 	jsrto	JmpTo_PlayMusic
+	bmi.w	LevelSelect_Return	; sound test
+	cmpi.w	#$4000,d0
+ 	bne.w	LevelSelect_StartZone
+; 	bne.w	LevelSelect_Return
+
+;LevelSelect_SpecialStage:
+	move.b	#GameModeID_SpecialStage,(Game_Mode).w ; => SpecialStage
+    if emerald_hill_zone_act_1=0
+	clr.w	(Current_ZoneAndAct).w ; emerald_hill_zone_act_1
+    else
+	move.w	#emerald_hill_zone_act_1,(Current_ZoneAndAct).w
+    endif
+	move.b	#3,(Life_count).w
+	move.b	#3,(Life_count_2P).w
+	moveq	#0,d0
+	move.w	d0,(Ring_count).w
+	move.l	d0,(Timer).w
+	move.l	d0,(Score).w
+	move.w	d0,(Ring_count_2P).w
+	move.l	d0,(Timer_2P).w
+	move.l	d0,(Score_2P).w
+	move.l	#5000,(Next_Extra_life_score).w
+	move.l	#5000,(Next_Extra_life_score_2P).w
+	move.w	(Player_option).w,(Player_mode).w
+	rts
+EmeraldGiveMenuScreen:
+	bsr.w	Pal_FadeToBlack
+	move	#$2700,sr
+	move.w	(VDP_Reg1_val).w,d0
+	andi.b	#$BF,d0
+	move.w	d0,(VDP_control_port).l
+	bsr.w	ClearScreen
+	lea	(VDP_control_port).l,a6
+	move.w	#$8004,(a6)		; H-INT disabled
+	move.w	#$8200|(VRAM_Menu_Plane_A_Name_Table/$400),(a6)		; PNT A base: $C000
+	move.w	#$8400|(VRAM_Menu_Plane_B_Name_Table/$2000),(a6)	; PNT B base: $E000
+	move.w	#$8200|(VRAM_Menu_Plane_A_Name_Table/$400),(a6)		; PNT A base: $C000
+	move.w	#$8700,(a6)		; Background palette/color: 0/0
+	move.w	#$8C81,(a6)		; H res 40 cells, no interlace, S/H disabled
+	move.w	#$9001,(a6)		; Scroll table size: 64x32
+
+	clearRAM Object_Display_Lists,Object_Display_Lists_End
+	clearRAM Object_RAM,Object_RAM_End
+
+	; load background + graphics of font/LevSelPics
+	clr.w	(VDP_Command_Buffer).w
+	move.l	#VDP_Command_Buffer,(VDP_Command_Buffer_Slot).w
+	move.l	#vdpComm(tiles_to_bytes(ArtTile_ArtNem_FontStuff),VRAM,WRITE),(VDP_control_port).l
+	lea	(ArtNem_FontStuff).l,a0
+	bsr.w	NemDec
+	move.l	#vdpComm(tiles_to_bytes(ArtTile_ArtNem_MenuBox),VRAM,WRITE),(VDP_control_port).l
+	lea	(ArtNem_MenuBox).l,a0
+	bsr.w	NemDec
+	move.l	#vdpComm(tiles_to_bytes(ArtTile_ArtNem_LevelSelectPics),VRAM,WRITE),(VDP_control_port).l
+	lea	(ArtNem_LevelSelectPics).l,a0
+	bsr.w	NemDec
+	lea	(Chunk_Table).l,a1
+	lea	(MapEng_MenuBack).l,a0
+	move.w	#make_art_tile(ArtTile_VRAM_Start,3,0),d0
+	bsr.w	EniDec
+	lea	(Chunk_Table).l,a1
+	move.l	#vdpComm(VRAM_Plane_B_Name_Table,VRAM,WRITE),d0
+	moveq	#40-1,d1
+	moveq	#28-1,d2
+	jsrto	JmpTo_PlaneMapToVRAM_H40	; fullscreen background
+
+; 	cmpi.b	#GameModeID_OptionsMenu,(Game_Mode).w	; options menu?
+; 	beq.w	MenuScreen_Options	; if yes, branch
+	;move.b	#GameModeID_OptionsMenu,(Game_Mode).w ; set Game Mode to Sega Screen
+; 	cmpi.b	#GameModeID_LevelSelect,(Game_Mode).w	; level select menu?
+	jmp		EmeraldGiveMenuScreen_LevelSelect	; if yes, branch
 ; loc_8BD4:
 MenuScreen:
 	bsr.w	Pal_FadeToBlack
@@ -11682,6 +12001,68 @@ MenuScreen:
 
 	cmpi.b	#GameModeID_LevelSelect,(Game_Mode).w	; level select menu?
 	beq.w	MenuScreen_LevelSelect	; if yes, branch
+
+;MenuScreen_LevSel2P:
+	lea	(Chunk_Table).l,a1
+	lea	(MapEng_LevSel2P).l,a0
+	move.w	#make_art_tile(ArtTile_ArtNem_MenuBox,0,0),d0
+	bsr.w	EniDec
+	lea	(Chunk_Table+$198).l,a1
+	lea	(MapEng_LevSel2P).l,a0
+	move.w	#make_art_tile(ArtTile_ArtNem_MenuBox,1,0),d0
+	bsr.w	EniDec
+	lea	(Chunk_Table+$330).l,a1
+	lea	(MapEng_LevSelIcon).l,a0
+	move.w	#make_art_tile(ArtTile_ArtNem_LevelSelectPics,0,0),d0
+	bsr.w	EniDec
+	lea	(Chunk_Table+$498).l,a2
+
+	moveq	#bytesToWcnt(tiles_to_bytes(1)),d1
+-	move.w	#make_art_tile(ArtTile_ArtNem_MenuBox+11,1,0),(a2)+
+	dbf	d1,-
+
+	bsr.w	Update2PLevSelSelection
+	addq.b	#1,(Current_Zone_2P).w
+	andi.b	#3,(Current_Zone_2P).w
+	bsr.w	ClearOld2PLevSelSelection
+	addq.b	#1,(Current_Zone_2P).w
+	andi.b	#3,(Current_Zone_2P).w
+	bsr.w	ClearOld2PLevSelSelection
+	addq.b	#1,(Current_Zone_2P).w
+	andi.b	#3,(Current_Zone_2P).w
+	bsr.w	ClearOld2PLevSelSelection
+	addq.b	#1,(Current_Zone_2P).w
+	andi.b	#3,(Current_Zone_2P).w
+	clr.w	(Player_mode).w
+	clr.b	(Current_Act_2P).w
+	clr.w	(Results_Screen_2P).w	; VsRSID_Act
+	clr.b	(Level_started_flag).w
+	clr.w	(Anim_Counters).w
+	clr.w	(Game_Over_2P).w
+	lea	(Anim_SonicMilesBG).l,a2
+	jsrto	JmpTo2_Dynamic_Normal
+	moveq	#PalID_Menu,d0
+	bsr.w	PalLoad_ForFade
+	lea	(Normal_palette_line3).w,a1
+	lea	(Target_palette_line3).w,a2
+
+	moveq	#bytesToLcnt(tiles_to_bytes(1)),d1
+-	move.l	(a1),(a2)+
+	clr.l	(a1)+
+	dbf	d1,-
+
+	move.b	#MusID_Options,d0
+	jsrto	JmpTo_PlayMusic
+	move.w	#(30*60)-1,(Demo_Time_left).w	; 30 seconds
+	clr.w	(Two_player_mode).w
+	clr.l	(Camera_X_pos).w
+	clr.l	(Camera_Y_pos).w
+	move.b	#VintID_Menu,(Vint_routine).w
+	bsr.w	WaitForVint
+	move.w	(VDP_Reg1_val).w,d0
+	ori.b	#$40,d0
+	move.w	d0,(VDP_control_port).l
+	bsr.w	Pal_FadeFromBlack
 
 ;MenuScreen_LevSel2P:
 	lea	(Chunk_Table).l,a1
@@ -11997,7 +12378,7 @@ MenuScreen_Options:
 	jsrto	JmpTo2_Dynamic_Normal
 	moveq	#PalID_Menu,d0
 	bsr.w	PalLoad_ForFade
-	move.b	#MusID_Options,d0
+	move.b	#MusID_2PResult,d0
 	jsrto	JmpTo_PlayMusic
 	clr.w	(Two_player_mode).w
 	clr.l	(Camera_X_pos).w
@@ -12050,6 +12431,7 @@ OptionScreen_Select:
 	move.w	d0,(Got_Emerald).w
 	move.l	d0,(Got_Emeralds_array).w
 	move.l	d0,(Got_Emeralds_array+4).w
+
     endif
 	move.b	#GameModeID_Level,(Game_Mode).w ; => Level (Zone play mode)
 	rts
@@ -12411,7 +12793,6 @@ LevelSelect_Main:	; routine running during level select
 	bne.s	LevelSelect_PressStart	; yes
 	bra.w	LevelSelect_Main	; no
 ; ===========================================================================
-
 ;loc_93F0:
 LevelSelect_PressStart:
 	move.w	(Level_select_zone).w,d0
@@ -12419,7 +12800,8 @@ LevelSelect_PressStart:
 	move.w	LevelSelect_Order(pc,d0.w),d0
 	bmi.w	LevelSelect_Return	; sound test
 	cmpi.w	#$4000,d0
-	bne.s	LevelSelect_StartZone
+; 	bne.s	LevelSelect_StartZone
+	bne.s	LevelSelect_Return
 
 ;LevelSelect_SpecialStage:
 	move.b	#GameModeID_SpecialStage,(Game_Mode).w ; => SpecialStage
@@ -12828,15 +13210,33 @@ CheckCheats:	; This is called from 2 places: the options screen and the level se
     else
 	; The next line causes the bug where the OOZ music plays until reset.
 	; Remove "&$7F" to fix the bug.
-	move.b	#SndID_ContinueJingle&$7F,d0	; Play the continue jingle
+	move.b	#SndID_ContinueJingle,d0	; Play the continue jingle
+	;lea	EndingSequence, a6
+	;jsr	(a6)
+	jmp GameMode_EndingSequence
     endif
 	jsrto	JmpTo_PlayMusic
 	bra.s	++
 ; ===========================================================================
 +
-	move.w	#7,(Got_Emerald).w		; Give 7 emeralds to the player
-	move.b	#MusID_Emerald,d0		; Play the emerald jingle
+	move.b	#SndID_Ring,d0
 	jsrto	JmpTo_PlayMusic
+	; this part (maybe) will give the player how many emeralds the next sound test thing is
+	move.w	#0,(Correct_cheat_entries_2).w	; Clear the number of correct entries
+
+	lea EmeraldGiveMenuScreen,a6
+	jsr (a6)
+
+
+; 	move.w	(Correct_cheat_entries).w,d0
+; 	adda.w	d0,a0
+; 	move.w	(Sound_test_sound).w,d0
+; 	move.w	d0,(Got_Emerald).w		; Give 7 emeralds to the player
+; 	move.w	d0,(Got_Emerald).w												NOTE: some unused stuff that I put
+; 	move.l	d0,(Got_Emeralds_array).w
+; 	move.l	d0,(Got_Emeralds_array+4).w
+; 	move.b	#MusID_Emerald,d0		; Play the emerald jingle
+; 	jsrto	JmpTo_PlayMusic
 +
 	move.w	#0,(Correct_cheat_entries_2).w	; Clear the number of correct entries
 +
@@ -12845,12 +13245,12 @@ CheckCheats:	; This is called from 2 places: the options screen and the level se
 level_select_cheat:
 	; 17th September 1965, the birthdate of one of Sonic 2's developers,
 	; Yuji Naka.
-	dc.b $19, $65,   9, $17,   0
+	dc.b 1, 1,   5, 4,   0
 	rev02even
 ; byte_97B7
 continues_cheat:
 	; November 24th, which was Sonic 2's release date in the EU and US.
-	dc.b   1,   1,   2,   4,   0
+	dc.b   1,   2,   3,   4,   0
 	rev02even
 debug_cheat:
 	; 24th November 1992 (also known as "Sonic 2sday"), which was
@@ -12862,7 +13262,7 @@ super_sonic_cheat:
 	; Book of Genesis, 41:26, which makes frequent reference to the
 	; number 7. 7 happens to be the number of Chaos Emeralds.
 	; The Mega Drive is known as the Genesis in the US.
-	dc.b   4,   1,   2,   6,   0
+	dc.b   1,   3,   1,   3,	0
 	rev02even
 
 	; set the character set for menu text
@@ -13122,7 +13522,9 @@ EndgameCredits:
 -
 	jsrto	JmpTo_ClearScreen
 	bsr.w	ShowCreditsScreen
-	bsr.w	Pal_FadeFromBlack
+	lea		Pal_FadeFromBlack, a0
+; 	bsr.w	Pal_FadeFromBlack
+	jsr		(a0)
 
 	; Here's how to calculate new duration values for the below instructions.
 	; Each slide of the credits is displayed for $18E frames at 60 FPS, or $144 frames at 50 FPS.
@@ -13144,14 +13546,18 @@ EndgameCredits:
 	bsr.w	WaitForVint
 	dbf	d0,-
 
-	bsr.w	Pal_FadeToBlack
+	lea		Pal_FadeToBlack, a0
+	jsr		(a0)
+; 	bsr.w	Pal_FadeToBlack
 	lea	(off_B2CA).l,a1
 	addq.w	#1,(CreditsScreenIndex).w
 	move.w	(CreditsScreenIndex).w,d0
 	lsl.w	#2,d0
 	move.l	(a1,d0.w),d0
 	bpl.s	--
-	bsr.w	Pal_FadeToBlack
+	lea Pal_FadeToBlack, a0
+	jsr		(a0)
+; 	bsr.w	Pal_FadeToBlack
 	jsrto	JmpTo_ClearScreen
 	move.l	#vdpComm($0000,VRAM,WRITE),(VDP_control_port).l
 	lea	(ArtNem_EndingTitle).l,a0
@@ -14473,8 +14879,8 @@ byte_B75C:	creditText 1,"OBJECT  PLACEMENT"
 byte_B77E:	creditText 0,"TAKAHIRO  ANTO"
 byte_B799:	creditText 0,"YUTAKA  SUGANO"
 byte_B7B5:	creditText 1,"SPECIALSTAGE"
-byte_B7CE:	creditText 0,"CAROL  ANN  HANSHAW"
-byte_B7F2:	creditText 1,"ZONE  ARTISTS"
+byte_B7CE:	creditText 0,"TAILS1154"
+byte_B7F2:	creditText 1,"HOLYMAN83"
 byte_B80B:	creditText 0,"CRAIG  STITT"
 byte_B821:	creditText 0,"BRENDA  ROSS"
 byte_B839:	creditText 0,"JINA  ISHIWATARI"
@@ -14502,8 +14908,8 @@ byte_BA00:	creditText 0,"SYUICHI  KATAGI"
 byte_BA1B:	creditText 0,"TAKAHIRO  HAMANO"
 byte_BA3A:	creditText 0,"YOSHIKI  OOKA"
 byte_BA52:	creditText 0,"STEVE  WOITA"
-byte_BA69:	creditText 1,"GAME  MANUAL"
-byte_BA81:	creditText 0,"YOUICHI  TAKAHASHI"
+byte_BA69:	creditText 1,"COOL PEOPLE"
+byte_BA81:	creditText 0,"XVBIGTUNA"
 byte_BAA2:	creditText 1,"SUPPORTERS"
 byte_BAB8:	creditText 0,"DAIZABUROU  SAKURAI"
 byte_BADC:	creditText 0,"HISASHI  SUZUKI"
@@ -14516,16 +14922,16 @@ byte_BB16:	creditText 0,"FUJIO  MINEGISHI"
 byte_BB32:	creditText 0,"TAKAHARU UTSUNOMIYA"
 byte_BB58:	creditText 1,"SPECIAL  THANKS"
 byte_BB75:	creditText 1,"TO"
-byte_BB7B:	creditText 0,"CINDY  CLAVERAN"
-byte_BB98:	creditText 0,"DEBORAH  MCCRACKEN"
-byte_BBBC:	creditText 0,"TATSUO  YAMADA"
+byte_BB7B:	creditText 0,"XVBIGTUNA"
+byte_BB98:	creditText 0,"HOLYMAN83"
+byte_BBBC:	creditText 0,"TAILS1154"
 byte_BBD8:	creditText 0,"DAISUKE  SAITO"
 byte_BBF2:	creditText 0,"KUNITAKE  AOKI"
 byte_BC0C:	creditText 0,"TSUNEKO  AOKI"
 byte_BC25:	creditText 0,"MASAAKI  KAWAMURA"
 byte_BC46:	creditText 0,"SONIC"
 byte_BC51:	creditText 1,"2"
-byte_BC55:	creditText 0,"CAST  OF  CHARACTERS"
+byte_BC55:	creditText 0,"SPECIAL STAGE CREDITS"
 byte_BC7B:	creditText 0,"PRESENTED"
 byte_BC8F:	creditText 0,"BY"
 byte_BC95:	creditText 0,"SEGA"
@@ -14547,9 +14953,9 @@ byte_BCD9:	creditText 0,"LOCKY  P"
 
 ; intro text
 vram_src := ArtTile_ArtNem_CreditText
-byte_BCE9:	creditText   0,"IN"
-byte_BCEE:	creditText   0,"AND"
-byte_BCF6:	creditText   0,"MILES 'TAILS' PROWER"
+byte_BCE9:	creditText   0,""
+byte_BCEE:	creditText   0,"AND TAILS"
+byte_BCF6:	creditText   0,"IN SPECIAL STAGE"
 byte_BD1A:	creditText   0,"SONIC"
 
  charset ; revert character set

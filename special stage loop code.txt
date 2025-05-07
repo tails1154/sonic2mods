@@ -1,0 +1,20 @@
+MainSpecialStage_Loop:
+	move.b	#GameModeID_SpecialStage,(Game_Mode).w ; => Level (Zone play mode). jk its now SpecialStage
+
+	move.b	#3,(Life_count).w
+	move.b	#3,(Life_count_2P).w
+
+	moveq	#0,d0
+	move.w	d0,(Ring_count).w
+	move.l	d0,(Timer).w
+	move.l	d0,(Score).w
+	move.w	d0,(Ring_count_2P).w
+	move.l	d0,(Timer_2P).w
+	move.l	d0,(Score_2P).w
+	move.b	d0,(Continue_count).w
+
+	move.l	#5000,(Next_Extra_life_score).w
+	move.l	#5000,(Next_Extra_life_score_2P).w
+	lea MainSpecialStage_Loop, a6
+	jsr	(a6)
+	rts

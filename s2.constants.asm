@@ -1886,6 +1886,7 @@ SpecialStageResults:
 SpecialStageResults2:
 				ds.b	object_size
 				ds.b	$51*object_size
+stagecounter: ds.w 0 ;DANGER this is weird
 SS_Dynamic_Object_RAM_End:
     if * > Object_RAM_End
 	fatal "Special stage objects go past end of object RAM buffer."
@@ -2556,3 +2557,7 @@ ArtTile_ArtNem_BigRing_Flash          = $0462
 ArtTile_ArtNem_EndPoints              = $04B6
 ArtTile_ArtNem_BreakWall              = $0590
 ArtTile_ArtNem_GHZ_Purple_Rock        = $06C0
+
+
+; my super cool (non funcional) variable!
+
