@@ -1,0 +1,357 @@
+Fixed Segments:
+
+*Segment 000 - *Unnamed*: Offset $20FE  Size $4
+*Segment 001 - *Unnamed*: Offset $211A  Size $4
+*Segment 002 - *Unnamed*: Offset $2132  Size $4
+*Segment 003 - *Unnamed*: Offset $214E  Size $4
+*Segment 004 - *Unnamed*: Offset $3076  Size $4
+*Segment 005 - *Unnamed*: Offset $3084  Size $4
+*Segment 006 - *Unnamed*: Offset $30F2  Size $4
+*Segment 007 - *Unnamed*: Offset $6D44  Size $4
+*Segment 008 - *Unnamed*: Offset $D8FA  Size $4
+*Segment 009 - *Unnamed*: Offset $12482  Size $4
+*Segment 00A - *Unnamed*: Offset $163A6  Size $4
+*Segment 00B - *Unnamed*: Offset $163A6  Size $4
+*Segment 00C - *Unnamed*: Offset $1D698  Size $C
+*Segment 00D - *Unnamed*: Offset $1D708  Size $4
+*Segment 00E - *Unnamed*: Offset $1D7A2  Size $4
+*Segment 00F - *Unnamed*: Offset $1D800  Size $4
+*Segment 010 - *Unnamed*: Offset $1D85E  Size $4
+*Segment 011 - *Unnamed*: Offset $1D8B0  Size $4
+*Segment 012 - *Unnamed*: Offset $1DA70  Size $C
+*Segment 013 - *Unnamed*: Offset $62900  Size $100
+*Segment 014 - *Unnamed*: Offset $62A00  Size $1000
+*Segment 015 - *Unnamed*: Offset $63A00  Size $1000
+*Segment 016 - *Unnamed*: Offset $1B66  Size $246
+*Segment 017 - ColPointers: Offset $4100  Size $18
+*Segment 018 - *Unnamed*: Offset $606C  Size $20
+*Segment 019 - *Unnamed*: Offset $6112  Size $70
+*Segment 01A - SS_LayoutIndex: Offset $1B64C  Size $18
+*Segment 01B - SS_StartLoc: Offset $1B664  Size $18
+*Segment 01C - MainLoadBlocks: Offset $1D5A2  Size $70
+*Segment 023 - *Unnamed*: Offset $100  Size $8E
+*Segment 024 - *Unnamed*: Offset $379A  Size $7
+*Segment 025 - *Unnamed*: Offset $12CC8  Size $6
+*Segment 026 - *Unnamed*: Offset $5F1C  Size $150
+*Segment 027 - *Unnamed*: Offset $6182  Size $1C
+*Segment 028 - *Unnamed*: Offset $13916  Size $10
+*Segment 029 - *Unnamed*: Offset $149A8  Size $A
+*Segment 02B - *Unnamed*: Offset $C6F4  Size $32
+*Segment 02D - *Unnamed*: Offset $31BE  Size $4
+*Segment 02E - *Unnamed*: Offset $31C6  Size $4
+*Segment 02F - *Unnamed*: Offset $333A  Size $E
+*Segment 031 - *Unnamed*: Offset $C388  Size $4
+
+
+Floating Segments:
+
+*Dispose 000: Offset $2168  End $29A8  Size $840
+ *Segment 01D - PalPointers: Offset $2168  Size $840
+ *Unused Space: Offset $29A8  Size $0
+
+*Dispose 001: Offset $1DB12  End $1DC00  Size $EE
+ *Segment 02A - SetStartingLevel: Offset $1DB12  Size $22
+ *Segment 02C - *Unnamed*: Offset $1DB34  Size $10
+ *Unused Space: Offset $1DB44  Size $BC
+
+*Dispose 002: Offset $3BCF2  End $5CC62  Size $20F70
+ *Segment 01F - *Unnamed*: Offset $3BCF2  Size $A52
+ *Segment 020 - *Unnamed*: Offset $3C744  Size $16A4
+ *Segment 021 - Level_Index: Offset $3DDE8  Size $175E
+ *Segment 022 - ObjPos_Index: Offset $3F546  Size $639C
+ *Segment 030 - TCardMapData: Offset $458E2  Size $1B9
+ *Unused Space: Offset $45A9B  Size $171C7
+
+*Dispose 003: Offset $627FC  End $62900  Size $104
+ *Unused Space: Offset $627FC  Size $104
+
+*Dispose 004: Offset $64A00  End $66AD6  Size $20D6
+ *Unused Space: Offset $64A00  Size $20D6
+
+*Dispose 005: Offset $68BD6  End $6A324  Size $174E
+ *Unused Space: Offset $68BD6  Size $174E
+
+*Dispose 006: Offset $6AF64  End $71990  Size $6A2C
+ *Unused Space: Offset $6AF64  Size $6A2C
+
+*Dispose 007: Offset $33A4  End $33B0  Size $C
+ *Unused Space: Offset $33A4  Size $C
+
+*Dispose 008: Offset $C9E6  End $CBA4  Size $1BE
+ *Unused Space: Offset $C9E6  Size $1BE
+
+*File End: Offset $80000  Size $380000
+ *Segment 01E - *Unnamed*: Offset $80000  Size $21496
+ *Remaining Available Space: Offset $A1496  Size $35EB6A
+
+
+Segment\Label Placement
+
+*Segment 000 - *Unnamed*: Offset $20FE  Size $4
+
+*Segment 001 - *Unnamed*: Offset $211A  Size $4
+
+*Segment 002 - *Unnamed*: Offset $2132  Size $4
+
+*Segment 003 - *Unnamed*: Offset $214E  Size $4
+
+*Segment 004 - *Unnamed*: Offset $3076  Size $4
+
+*Segment 005 - *Unnamed*: Offset $3084  Size $4
+
+*Segment 006 - *Unnamed*: Offset $30F2  Size $4
+
+*Segment 007 - *Unnamed*: Offset $6D44  Size $4
+
+*Segment 008 - *Unnamed*: Offset $D8FA  Size $4
+
+*Segment 009 - *Unnamed*: Offset $12482  Size $4
+
+*Segment 00A - *Unnamed*: Offset $163A6  Size $4
+
+*Segment 00B - *Unnamed*: Offset $163A6  Size $4
+
+*Segment 00C - *Unnamed*: Offset $1D698  Size $C
+
+*Segment 00D - *Unnamed*: Offset $1D708  Size $4
+
+*Segment 00E - *Unnamed*: Offset $1D7A2  Size $4
+
+*Segment 00F - *Unnamed*: Offset $1D800  Size $4
+
+*Segment 010 - *Unnamed*: Offset $1D85E  Size $4
+
+*Segment 011 - *Unnamed*: Offset $1D8B0  Size $4
+
+*Segment 012 - *Unnamed*: Offset $1DA70  Size $C
+
+*Segment 013 - *Unnamed*: Offset $62900  Size $100
+
+*Segment 014 - *Unnamed*: Offset $62A00  Size $1000
+
+*Segment 015 - *Unnamed*: Offset $63A00  Size $1000
+
+*Segment 016 - *Unnamed*: Offset $1B66  Size $246
+ Pal_TitleCyc: $1B66
+ Pal_GHZCyc: $1B86
+ Pal_LZCyc1: $1BA6
+ Pal_LZCyc2: $1BC6
+ Pal_LZCyc3: $1BD8
+ Pal_SBZ3Cyc1: $1BEA
+ Pal_SLZCyc: $1C52
+ Pal_SYZCyc1: $1C76
+ Pal_SYZCyc2: $1C96
+ Pal_SBZCycList: $1CA6
+ Pal_SBZCycList2: $1CDE
+ Pal_SBZCyc1: $1D0A
+ Pal_SBZCyc2: $1D1A
+ Pal_SBZCyc3: $1D2A
+ Pal_SBZCyc4: $1D3A
+ Pal_SBZCyc5: $1D46
+ Pal_SBZCyc6: $1D56
+ Pal_SBZCyc7: $1D66
+ Pal_SBZCyc8: $1D86
+ Pal_SBZCyc9: $1D90
+ Pal_SBZCyc10: $1DA0
+
+*Segment 017 - ColPointers: Offset $4100  Size $18
+
+*Segment 018 - *Unnamed*: Offset $606C  Size $20
+
+*Segment 019 - *Unnamed*: Offset $6112  Size $70
+
+*Segment 01A - SS_LayoutIndex: Offset $1B64C  Size $18
+
+*Segment 01B - SS_StartLoc: Offset $1B664  Size $18
+
+*Segment 01C - MainLoadBlocks: Offset $1D5A2  Size $70
+
+*Segment 01D - PalPointers: Offset $2168  Size $840
+ Pal_SegaBG: $2208
+ Pal_Title: $2288
+ Pal_LevelSel: $2308
+ Pal_Sonic: $2388
+ Pal_GHZ: $23A8
+ Pal_LZ: $2408
+ Pal_LZWater: $2468
+ Pal_MZ: $24E8
+ Pal_SLZ: $2548
+ Pal_SYZ: $25A8
+ Pal_SBZ1: $2608
+ Pal_SBZ2: $2668
+ Pal_Special: $26C8
+ Pal_SBZ3: $2748
+ Pal_SBZ3Water: $27A8
+ Pal_LZSonWater: $2828
+ Pal_SBZ3SonWat: $2848
+ Pal_SpeResult: $2868
+ Pal_SpeContinue: $28E8
+ Pal_Ending: $2928
+
+*Segment 01E - *Unnamed*: Offset $80000  Size $21496
+ Block_GHZ: $80000
+ Tile_GHZ_0: $80BF6
+ Tile_GHZ_1: $821EA
+ Meta_GHZ: $83558
+ Block_LZ: $85612
+ Tile_LZ: $8593C
+ Meta_LZ: $87484
+ Block_MZ: $89C74
+ Tile_MZ: $8A47E
+ Meta_MZ: $8CCC2
+ Block_SLZ: $8E482
+ Tile_SLZ: $8EC66
+ Meta_SLZ: $927BA
+ Block_SYZ: $94BEA
+ Tile_SYZ: $95558
+ Meta_SYZ: $98C84
+ Block_SBZ: $9B034
+ Tile_SBZ: $9C392
+ Meta_SBZ: $9EA60
+
+*Segment 01F - *Unnamed*: Offset $3BCF2  Size $A52
+ Col_GHZ: $3BCF2
+ Col_LZ: $3BEAA
+ Col_MZ: $3BF72
+ Col_SLZ: $3C102
+ Col_SYZ: $3C2F6
+ Col_SBZ: $3C4EA
+
+*Segment 020 - *Unnamed*: Offset $3C744  Size $16A4
+ SS_1: $3C744
+ SS_2: $3C9BE
+ SS_3: $3CDD0
+ SS_4: $3D12C
+ SS_5: $3D606
+ SS_6: $3DAD8
+
+*Segment 021 - Level_Index: Offset $3DDE8  Size $175E
+ Level_GHZ1: $3DE90
+ Level_GHZ1_Blank: $3DF82
+ Level_GHZ2: $3DF86
+ Level_GHZ2_Blank: $3E04E
+ Level_GHZ3: $3E052
+ Level_GHZBG: $3E174
+ Level_GHZ3_Blank: $3E196
+ Level_GHZ4_Blank: $3E19A
+ Level_LZ1: $3E19E
+ Level_LZBG: $3E2A0
+ Level_LZ1_Blank: $3E3A2
+ Level_LZ2: $3E3A6
+ Level_LZ2_Blank: $3E440
+ Level_LZ3: $3E444
+ Level_LZ3_Blank: $3E55E
+ Level_SBZ3: $3E562
+ Level_LZ4_Blank: $3E61C
+ Level_MZ1: $3E620
+ Level_MZ1BG: $3E6BE
+ Level_MZ2: $3E738
+ Level_MZ2BG: $3E7DC
+ Level_MZ2_Blank: $3E86E
+ Level_MZ3: $3E872
+ Level_MZ3BG: $3E954
+ Level_MZ3_Blank: $3E9F8
+ Level_MZ4_Blank: $3E9FC
+ Level_SLZ1: $3EA00
+ Level_SLZBG: $3EB12
+ Level_SLZ2: $3EB8C
+ Level_SLZ3: $3EC7C
+ Level_SLZ_Blank: $3ED96
+ Level_SYZ1: $3ED9A
+ Level_SYZBG: $3EE56
+ Level_SYZ1_Blank: $3EE90
+ Level_SYZ2: $3EE94
+ Level_SYZ2_Blank: $3EF98
+ Level_SYZ3: $3EF9C
+ Level_SYZ3_Blank: $3F0F6
+ Level_SYZ4_Blank: $3F0FA
+ Level_SBZ1: $3F0FE
+ Level_SBZ1BG: $3F220
+ Level_SBZ2: $3F25E
+ Level_SBZ2BG: $3F3A0
+ Level_SBZ3_Blank: $3F50A
+ Level_SBZ4_Blank: $3F50E
+ Level_End: $3F512
+ Level_End_Blank: $3F542
+
+*Segment 022 - ObjPos_Index: Offset $3F546  Size $639C
+ ObjPos_GHZ1: $3F5DC
+ ObjPos_GHZ2: $3FAFE
+ ObjPos_GHZ3: $400BC
+ ObjPos_LZ1: $40776
+ ObjPos_LZ2: $40BE4
+ ObjPos_LZ3: $40F26
+ ObjPos_SBZ3: $41508
+ ObjPos_LZ1pf1: $419A0
+ ObjPos_LZ1pf2: $419D2
+ ObjPos_LZ2pf1: $41A04
+ ObjPos_LZ2pf2: $41A36
+ ObjPos_LZ3pf1: $41A68
+ ObjPos_LZ3pf2: $41AB2
+ ObjPos_MZ1: $41AF0
+ ObjPos_MZ2: $41E5C
+ ObjPos_MZ3: $42306
+ ObjPos_SLZ1: $4287C
+ ObjPos_SLZ2: $42DBC
+ ObjPos_SLZ3: $43224
+ ObjPos_SYZ1: $43806
+ ObjPos_SYZ2: $43C92
+ ObjPos_SYZ3: $441FC
+ ObjPos_SBZ1: $44802
+ ObjPos_SBZ2: $44F40
+ ObjPos_FZ: $4561E
+ ObjPos_SBZ1pf1: $45648
+ ObjPos_SBZ1pf2: $4567A
+ ObjPos_SBZ1pf3: $456AC
+ ObjPos_SBZ1pf4: $456DE
+ ObjPos_SBZ1pf5: $45710
+ ObjPos_SBZ1pf6: $45742
+ ObjPos_End: $4577A
+ ObjPos_Null: $458DC
+
+*Segment 023 - *Unnamed*: Offset $100  Size $8E
+
+*Segment 024 - *Unnamed*: Offset $379A  Size $7
+
+*Segment 025 - *Unnamed*: Offset $12CC8  Size $6
+
+*Segment 026 - *Unnamed*: Offset $5F1C  Size $150
+
+*Segment 027 - *Unnamed*: Offset $6182  Size $1C
+
+*Segment 028 - *Unnamed*: Offset $13916  Size $10
+
+*Segment 029 - *Unnamed*: Offset $149A8  Size $A
+
+*Segment 02A - SetStartingLevel: Offset $1DB12  Size $22
+ TS_FirstLevel: $1DB12
+ LS_SetLevel: $1DB20
+
+*Segment 02B - *Unnamed*: Offset $C6F4  Size $32
+
+*Segment 02C - *Unnamed*: Offset $1DB34  Size $10
+ Code_LevelSelect_J: $1DB34
+ Code_LevelSelect_US: $1DB3A
+
+*Segment 02D - *Unnamed*: Offset $31BE  Size $4
+
+*Segment 02E - *Unnamed*: Offset $31C6  Size $4
+
+*Segment 02F - *Unnamed*: Offset $333A  Size $E
+
+*Segment 030 - TCardMapData: Offset $458E2  Size $1B9
+ TCMap_GHZ: $458FA
+ TCMap_LZ: $45928
+ TCMap_MZ: $45956
+ TCMap_SLZ: $45975
+ TCMap_SYZ: $459A3
+ TCMap_SBZ: $459D6
+ TCMap_Zone: $45A09
+ TCMap_Act1: $45A1E
+ TCMap_Act2: $45A29
+ TCMap_Act3: $45A34
+ TCMap_Oval: $45A3F
+ TCMap_Final: $45A81
+
+*Segment 031 - *Unnamed*: Offset $C388  Size $4
+

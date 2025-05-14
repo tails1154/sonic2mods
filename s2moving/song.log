@@ -1,0 +1,180 @@
+> > > A4 - S1GHZEDIT.asm(28):7: error #1010: symbol undefined
+> > > nC8
+> > >  dc.b nC8
+> > >       ~~~
+> > > A4 - S1GHZEDIT.asm(42):7: error #1010: symbol undefined
+> > > nC8
+> > >  dc.b nC8, $38
+> > >       ~~~
+> > > A4 - S1GHZEDIT.asm(44):7: error #1010: symbol undefined
+> > > nC8
+> > >  dc.b nC8, $08, $08, nE7
+> > >       ~~~
+> > > A4 - S1GHZEDIT.asm(48):7: error #1010: symbol undefined
+> > > nD8
+> > >  dc.b nD8, $34, smpsNoAttack, $34, nC8, $08, nD8, nE7, $38, smpsNoAttack, $38, nC8
+> > >       ~~~
+> > > A4 - S1GHZEDIT.asm(49):12: error #1010: symbol undefined
+> > > nC8
+> > >  dc.b $08, nC8, nE7, nEb6, $34, smpsNoAttack, $34, nC8, $08, nEb6, nD8, $1C
+> > >            ~~~
+> > > A4 - S1GHZEDIT.asm(60):7: error #1010: symbol undefined
+> > > nC8
+> > >  dc.b nC8, $08
+> > >       ~~~
+> > > A4 - S1GHZEDIT.asm(67):52: error #1010: symbol undefined
+> > > nC8
+> > >  dc.b nA6, $04, nF6, nA6, nF6, nB6, nG6, nB6, nG6, nC8, nA6, nC8
+> > >                                                    ~~~
+> > > A4 - S1GHZEDIT.asm(68):12: error #1010: symbol undefined
+> > > nD8
+> > >  dc.b nA6, nD8, nB6, nD8, nB6
+> > >            ~~~
+> > > A4 - S1GHZEDIT.asm(72):7: error #1010: symbol undefined
+> > > nC8
+> > >  dc.b nC8, $08, nA6, $10, nC8, $08, nB6, $10, nC8, $08, nB6, $10
+> > >       ~~~
+> > > A4 - S1GHZEDIT.asm(73):32: error #1010: symbol undefined
+> > > nD8
+> > >  dc.b nG6, $30, nA6, $08, nE7, nD8, $10, nC8, $08, nB6, $10, nC8
+> > >                                ~~~
+> > > A4 - S1GHZEDIT.asm(74):32: error #1010: symbol undefined
+> > > nC8
+> > >  dc.b $08, nB6, $10, nG6, $38, nC8, $08, nA6, $10, nC8, $08, nB6
+> > >                                ~~~
+> > > A4 - S1GHZEDIT.asm(75):12: error #1010: symbol undefined
+> > > nC8
+> > >  dc.b $10, nC8, $08, nB6, $10, nG6, $30, nA6, $08, $08, nF6, $10
+> > >            ~~~
+> > > A4 - S1GHZEDIT.asm(168):7: error #1010: symbol undefined
+> > > nC8
+> > >  dc.b nC8, $01, smpsNoAttack, nB5, $0F, nRst, $08, nBb5, $01, smpsNoAttack, nA5, $0F
+> > >       ~~~
+> > > A4 - S1GHZEDIT.asm(171):7: error #1010: symbol undefined
+> > > nC8
+> > >  dc.b nC8, $01, smpsNoAttack, nB5, $07, nRst, $08, nBb5, $01, smpsNoAttack, nA5, $07
+> > >       ~~~
+> > > A4 - S1GHZEDIT.asm(172):43: error #1010: symbol undefined
+> > > nC8
+> > >  dc.b nRst, $08, nCs6, $01, smpsNoAttack, nC8, $0F, nRst, $08, nC8, $01, smpsNoAttack
+> > >                                           ~~~
+> > > A4 - S1GHZEDIT.asm(177):53: error #1010: symbol undefined
+> > > nC8
+> > >  dc.b nBb5, $01, smpsNoAttack, nA5, $0F, nRst, $08, nC8, $01, smpsNoAttack, nB5, $0F
+> > >                                                     ~~~
+> > > A4 - S1GHZEDIT.asm(178):43: error #1010: symbol undefined
+> > > nC8
+> > >  dc.b nRst, $08, nCs6, $01, smpsNoAttack, nC8, $07, nRst, $08
+> > >                                           ~~~
+> > > A4 - S1GHZEDIT.asm(180):32: error #1010: symbol undefined
+> > > nC8
+> > >  dc.b nCs6, $01, smpsNoAttack, nC8, $0F, nRst, $08, nC8, $01, smpsNoAttack, nB5, $28
+> > >                                ~~~
+> > > A4 - S1GHZEDIT.asm(193):29: error #1010: symbol undefined
+> > > nC8
+> > >  dc.b nA6, nRst, $24, nRst, nC8, $04, nRst, $10, nA6, $10, nG6, $04
+> > >                             ~~~
+> > > A4 - S1GHZEDIT.asm(194):24: error #1010: symbol undefined
+> > > nC8
+> > >  dc.b nRst, nA6, nRst, nC8, nRst
+> > >                        ~~~
+> > > A4 - S1GHZEDIT.asm(198):22: error #1010: symbol undefined
+> > > nC8
+> > >  dc.b nG6, $04, nA6, nC8, $08, nA6
+> > >                      ~~~
+> > > A4 - S1GHZEDIT.asm(200):22: error #1010: symbol undefined
+> > > nC8
+> > >  dc.b nG6, $04, nA6, nC8, $08, nE7
+> > >                      ~~~
+> > > A4 - S1GHZEDIT.asm(202):22: error #1010: symbol undefined
+> > > nC8
+> > >  dc.b nG6, $04, nA6, nC8, $08, nA6
+> > >                      ~~~
+> > > A4 - S1GHZEDIT.asm(206):23: error #1010: symbol undefined
+> > > nC8
+> > >  dc.b nE7, $08, nRst, nC8, nRst, nA6, nA6, nA6, $04, nRst, nC8, nRst
+> > >                       ~~~
+> > > A4 - S1GHZEDIT.asm(221):39: error #1010: symbol undefined
+> > > nC8
+> > >  dc.b nRst, $34, nRst, nG6, $04, nA6, nC8, $08
+> > >                                       ~~~
+> > > A4 - S1GHZEDIT.asm(275):7: error #1010: symbol undefined
+> > > nC8
+> > >  dc.b nC8, $28, smpsNoAttack, $28, nD8, $10, nB6, nG6, nC8, $28, smpsNoAttack, $28
+> > >       ~~~
+> > > A4 - S1GHZEDIT.asm(276):27: error #1010: symbol undefined
+> > > nC8
+> > >  dc.b nB6, $10, nG6, nB6, nC8, $28, smpsNoAttack, $28, nD8, $10, nB6, nG6
+> > >                           ~~~
+> > > A4 - S1GHZEDIT.asm(277):7: error #1010: symbol undefined
+> > > nC8
+> > >  dc.b nC8, $40, smpsNoAttack, $40
+> > >       ~~~
+> > > A4 - S1GHZEDIT.asm(341):7: error #1010: symbol undefined
+> > > nC8
+> > >  dc.b nC8, $28, smpsNoAttack, $28, nD8, $10, nB6, nG6, nC8, $28, smpsNoAttack, $28
+> > >       ~~~
+> > > A4 - S1GHZEDIT.asm(342):27: error #1010: symbol undefined
+> > > nC8
+> > >  dc.b nB6, $10, nG6, nB6, nC8, $28, smpsNoAttack, $28, nD8, $10, nB6, nG6
+> > >                           ~~~
+> > > A4 - S1GHZEDIT.asm(343):7: error #1010: symbol undefined
+> > > nC8
+> > >  dc.b nC8, $40, smpsNoAttack, $40
+> > >       ~~~
+> > > A4 - S1GHZEDIT.asm(351):23: error #1010: symbol undefined
+> > > nD8
+> > >  dc.b nBb6, $08, nF6, nD8, nF6, nBb6, nF6, nD8, nF6
+> > >                       ~~~
+> > > A4 - S1GHZEDIT.asm(355):17: error #1010: symbol undefined
+> > > nC8
+> > >  dc.b nA6, nE7, nC8, nE7, nA6, nE7, nC8, nE7
+> > >                 ~~~
+> > > A4 - S1GHZEDIT.asm(359):19: error #1010: symbol undefined
+> > > nC8
+> > >  dc.b nAb6, nEb6, nC8, nEb6, nAb6, nEb6, nC8, nEb6
+> > >                   ~~~
+> > > A4 - S1GHZEDIT.asm(363):7: error #1010: symbol undefined
+> > > nC8
+> > >  dc.b nC8, nA6, nE7, nA6, nC8, nA6, nE7, nA6
+> > >       ~~~
+> > > A4 - S1GHZEDIT.asm(394):18: error #1010: symbol undefined
+> > > nC8
+> > >  dc.b nRst, $10, nC8, $04, nRst, $14, nC8, $08, nRst, $20, nB5, $04
+> > >                  ~~~
+> > > A4 - S1GHZEDIT.asm(401):49: error #1010: symbol undefined
+> > > nD8
+> > >  dc.b nBb6, $18, nA6, nG6, nF6, nE7, $08, nRst, nD8, nRst, nA5, $18
+> > >                                                 ~~~
+> > > A4 - S1GHZEDIT.asm(402):12: error #1010: symbol undefined
+> > > nC8
+> > >  dc.b nB5, nC8, nD8, nE7, $08, nRst, nA6, nRst, nAb6, $18, nG6, nF6
+> > >            ~~~
+> > > A4 - S1GHZEDIT.asm(403):13: error #1010: symbol undefined
+> > > nD8
+> > >  dc.b nEb6, nD8, $10, nC8, $08, nRst, nRst, $08, nG6, nA6, nG6, $10
+> > >             ~~~
+> > > A4 - S1GHZEDIT.asm(418):7: error #1010: symbol undefined
+> > > nC8
+> > >  dc.b nC8, $08, nB6, nA6, nG6, nC8, nB6, nA6, nG6
+> > >       ~~~
+> > > A4 - S1GHZEDIT.asm(426):60: error #1010: symbol undefined
+> > > nD8
+> > >  dc.b nRst, $10, nE7, $04, nRst, $14, nE7, $08, nRst, $20, nD8, $04
+> > >                                                            ~~~
+> > > A4 - S1GHZEDIT.asm(427):18: error #1010: symbol undefined
+> > > nD8
+> > >  dc.b nRst, $14, nD8, $08, nRst, $10
+> > >                  ~~~
+> > > A4 - S1GHZEDIT.asm(429):18: error #1010: symbol undefined
+> > > nC8
+> > >  dc.b nRst, $10, nC8, $04, nRst, $14, nC8, $08, nRst, $20, nB5, $04
+> > >                  ~~~
+> > > A4 - S1GHZEDIT.asm(432):7: error #1010: symbol undefined
+> > > nD8
+> > >  dc.b nD8, $34, smpsNoAttack, $34, nC8, $08, nD8, nE7, $38, smpsNoAttack, $38, nC8
+> > >       ~~~
+> > > A4 - S1GHZEDIT.asm(433):12: error #1010: symbol undefined
+> > > nC8
+> > >  dc.b $08, nC8, nE7, nEb6, $34, smpsNoAttack, $34, nC8, $08, nEb6, nD8
+> > >            ~~~
